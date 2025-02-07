@@ -7,23 +7,12 @@
 
 import SwiftUI
 
-
-
 struct ContentView: View {
-    init() {
-        let whiteAppearance = UINavigationBarAppearance()
-        let blackAppearance = UINavigationBarAppearance()
-        whiteAppearance.backgroundColor = .white
-        blackAppearance.backgroundColor = .black
-        blackAppearance.titleTextAttributes = [.foregroundColor: UIColor.white]
-        UINavigationBar.appearance().standardAppearance = blackAppearance
-        UINavigationBar.appearance().scrollEdgeAppearance = whiteAppearance
-    }
     var body: some View {
         NavigationView {
             ScrollView {
                 VStack(alignment: .leading, spacing: 20) {
-                    AsyncImage(url: URL(string: "https://file.notion.so/f/f/c3c1d212-c1f9-4eeb-be30-1d73097541c1/0f2f331d-01a8-45d0-8fea-75968283455c/IMG_9045.jpeg?table=block&id=58d9b178-28ac-4c0a-b951-2bf3acf1033f&spaceId=c3c1d212-c1f9-4eeb-be30-1d73097541c1&expirationTimestamp=1738872000000&signature=xkxjOa1LbNaFGMFIklzaKV34E5PQDqRBxOW1yb70iU8&downloadName=IMG_9045.jpeg")) { image in
+                    AsyncImage(url: URL(string: "https://avatars.githubusercontent.com/u/84794256?s=400&u=1a0de2b3ee32164da6da746daaf371fc0476175c&v=4")) { image in
                         image
                             .resizable()
                             .scaledToFill()
@@ -42,9 +31,29 @@ struct ContentView: View {
                     InfoField(label: "About", value: "I am a flutter developer, but now I am trying new fields like backend, DevOps, or as of now just SwiftUI. My hometown is Aktau 🌊🔥. I am very passionate about it and technology!")
                     
                     Spacer()
+                    
+                    NavigationLink(destination: HobbiesView()) {
+                        Text("Interests ⚡️")
+                            .font(.headline)
+                            .frame(maxWidth: .infinity)
+                            .padding()
+                            .background(Color.black.opacity(0.9))
+                            .foregroundColor(.white)
+                            .cornerRadius(10)
+                    }
+                    
+                    NavigationLink(destination: GoalsView()) {
+                        Text("Goals ⚡️")
+                            .font(.headline)
+                            .frame(maxWidth: .infinity)
+                            .padding()
+                            .background(Color.green.opacity(0.8))
+                            .foregroundColor(.white)
+                            .cornerRadius(10)
+                    }
+                    
                 }
                 .padding()
-                .background(Color.black.edgesIgnoringSafeArea(.all))
                 .navigationTitle("@kakimnsnv")
             }
         }
@@ -58,17 +67,85 @@ struct InfoField: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 5) {
             Text(label)
-                .font(.caption)
-                .foregroundColor(.gray)
+                .font(.title2)
+                .foregroundColor(.black.opacity(0.8))
             Text(value)
                 .padding()
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .background(
                     RoundedRectangle(cornerRadius: 10)
-                        .stroke(Color.white, lineWidth: 1)
+                        .stroke(Color.black, lineWidth: 1)
                 )
-                .foregroundColor(.white)
+                .foregroundColor(.black)
         }
+    }
+}
+
+struct Hobby: Identifiable {
+    let id = UUID()
+    let name: String
+    let description: String
+    let imageName: String
+}
+
+struct HobbiesView: View {
+    let hobbies: [Hobby] = [
+        Hobby(name: "Startups", description: "Bringing new ideas and create new unicorn 🦄", imageName: "brain.head.profile.fill"),
+        Hobby(name: "Hiking", description: "Exploring nature and enjoying scenic landscapes.", imageName: "leaf"),
+        Hobby(name: "Coding", description: "Building apps and solving problems through code.", imageName: "laptopcomputer")
+    ]
+    
+    var body: some View {
+        List(hobbies) { hobby in
+            HStack {
+                Image(systemName: hobby.imageName)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 40, height: 40)
+                    .padding()
+                    .background(Color.yellow.opacity(0.3))
+                    .clipShape(Circle())
+                
+                VStack(alignment: .leading, spacing: 5) {
+                    Text(hobby.name)
+                        .font(.headline)
+                    Text(hobby.description)
+                        .font(.subheadline)
+                        .foregroundColor(.secondary)
+                }
+            }
+            .padding(.vertical, 5)
+        }
+        .listStyle(.insetGrouped)
+        .navigationTitle("Interests ⚡️")
+    }
+}
+
+struct GoalsView: View {
+    let goals: [String] = [
+        "Become a lead Go developer.",
+        "Build an innovative app that impacts lives of students.",
+        "Master Flutter with advanced animations and optimizations.",
+        "Learn SwiftUI for native apple products, and hope some day work at Apple. I love Apple ♡",
+        "Contribute to open-source projects."
+    ]
+    
+    var body: some View {
+        ScrollView {
+            VStack(alignment: .leading, spacing: 20) {
+                ForEach(goals.indices, id: \.self) { index in
+                    HStack(alignment: .top, spacing: 10) {
+                        Text("\(index + 1).")
+                            .font(.headline)
+                            .foregroundColor(.accentColor)
+                        Text(goals[index])
+                            .font(.body)
+                    }
+                }
+            }
+            .padding()
+        }
+        .navigationTitle("Goals ⚡️")
     }
 }
 
