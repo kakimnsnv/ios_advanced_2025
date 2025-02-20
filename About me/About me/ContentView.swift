@@ -22,7 +22,6 @@ struct ContentView: View {
                     } placeholder: {
                         ProgressView()
                     }
-                    
                     InfoField(label: "Name", value: "Kakimbek")
                     InfoField(label: "Surname", value: "Nyssanov")
                     InfoField(label: "Birthday", value: "2005.03.19")
