@@ -71,6 +71,7 @@ class HeroListViewModel: ObservableObject {
     }
     
     func showHeroDetail(hero: Superhero) {
+        searchText = ""
         router.showHeroDetail(hero: hero)
     }
 }

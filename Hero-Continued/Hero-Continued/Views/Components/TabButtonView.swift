@@ -8,11 +8,25 @@
 import SwiftUI
 
 struct TabButtonView: View {
+    let title: String
+    let isSelected: Bool
+    let action: () -> Void
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        Button(action: action) {
+            VStack(spacing: 8) {
+                Text(title)
+                    .fontWeight(isSelected ? .bold : .medium)
+                    .foregroundColor(isSelected ? .primary : .secondary)
+                
+                Rectangle()
+                    .fill(isSelected ? Color.blue : Color.clear)
+                    .frame(height: 3)
+                    .cornerRadius(1.5)
+            }
+        }
+        .buttonStyle(PlainButtonStyle())
+        .frame(maxWidth: .infinity)
     }
 }
 
-#Preview {
-    TabButtonView()
-}

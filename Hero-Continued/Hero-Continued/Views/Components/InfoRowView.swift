@@ -8,11 +8,20 @@
 import SwiftUI
 
 struct InfoRowView: View {
+    let title: String
+    let value: String
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack(alignment: .leading, spacing: 4) {
+            Text(title)
+                .font(.subheadline)
+                .foregroundColor(.secondary)
+            
+            Text(value)
+                .font(.body)
+            
+            Divider()
+                .padding(.top, 4)
+        }
     }
-}
-
-#Preview {
-    InfoRowView()
 }

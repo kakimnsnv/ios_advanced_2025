@@ -30,7 +30,7 @@ class Router: RouterProtocol {
         
         navigationController.navigationBar.standardAppearance = appearance
         navigationController.navigationBar.scrollEdgeAppearance = appearance
-        navigationController.navigationBar.tintColor = .systemBlue
+        navigationController.navigationBar.tintColor = .systemYellow
     }
     
     func start() {
