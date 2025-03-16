@@ -7,49 +7,6 @@
 
 import SwiftUI
 
-//struct ContentView: View {
-//    @ObservedObject var viewModel: ViewModel
-//    var body: some View {
-//        VStack {
-//            AsyncImage(url: URL(string: viewModel.selectedHero?.images.md ?? "")) { phase in
-//                switch phase {
-//                case .empty:
-//                    ProgressView()
-//                        .frame(height: 300)
-//                case .success(let image):
-//                    image
-//                        .resizable()
-//                        .frame(height: 300)
-//                case .failure(let error):
-//                    Text(error.localizedDescription)
-//                        .backgroundStyle(.red.opacity(0.5))
-//                        .frame(height: 300)
-//                @unknown default:
-//                    Color.red.frame(height: 300)
-//                }
-//            }
-//            .padding(32)
-//
-//            Spacer()
-//
-//            Button {
-//                viewModel.getRandomHero()
-//            } label: {
-//                Text("Roll Hero")
-//                    .font(.headline)
-//                    .foregroundColor(.white)
-//                    .padding()
-//                    .background(Color.blue)
-//                    .cornerRadius(10)
-//            }
-//        .onAppear{
-//            Task{
-//                await viewModel.fetchHeroes()
-//            }
-//        }
-//    }
-//}
-
 struct ContentView: View {
     @ObservedObject var viewModel: ViewModel
     @State private var selectedTab = 0

@@ -17,7 +17,7 @@ class PostManager: ObservableObject {
     func addPost(authorId: UUID, imageLink: URL?, content: String, hashtags: [String]) {
         let newPost = Post(id: UUID(), authorId: authorId, imageLink: imageLink, content: content, hashtags: hashtags, likes: 0, timestamp: Date())
         postsDict[newPost.id] = newPost
-        delegate?.didAddPost(newPost)
+//        delegate?.didAddPost(newPost)
     }
     
     /// Increments the like count for a given post.
