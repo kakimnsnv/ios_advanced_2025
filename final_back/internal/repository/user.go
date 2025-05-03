@@ -11,9 +11,12 @@ import (
 )
 
 type UserRepo interface {
-	GetUserByID(userID primitive.ObjectID) (*models.User, error)
+	GetUserByID(userID *primitive.ObjectID) (*models.User, error)
 	GetUserByUsername(username string) (*models.User, error)
 	CreateUser(req *models.User) (primitive.ObjectID, error)
+	UpdateUser(id *primitive.ObjectID, req *models.User) (*models.User, error)
+	DeleteUser(id *primitive.ObjectID) error
+	ListUsers() ([]*models.User, error)
 }
 
 type userRepo struct {
@@ -34,7 +37,7 @@ func NewUserRepo(log *zap.Logger, collNames map[string]int, db *mongo.Database) 
 	}
 }
 
-func (r *userRepo) GetUserByID(userID primitive.ObjectID) (*models.User, error) {
+func (r *userRepo) GetUserByID(userID *primitive.ObjectID) (*models.User, error) {
 	var user models.User
 	err := r.collection.FindOne(context.TODO(), bson.M{"_id": userID}).Decode(&user)
 	if err != nil {
@@ -58,4 +61,34 @@ func (r *userRepo) CreateUser(req *models.User) (primitive.ObjectID, error) {
 		return primitive.NilObjectID, err
 	}
 	return res.InsertedID.(primitive.ObjectID), nil
+}
+
+func (r *userRepo) UpdateUser(id *primitive.ObjectID, req *models.User) (*models.User, error) {
+	var user models.User
+	err := r.collection.FindOneAndUpdate(context.TODO(), bson.M{"_id": id}, bson.M{"$set": req}).Decode(&user)
+	if err != nil {
+		return nil, err
+	}
+	return &user, nil
+}
+
+func (r *userRepo) DeleteUser(id *primitive.ObjectID) error {
+	_, err := r.collection.DeleteOne(context.TODO(), bson.M{"_id": id})
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func (r *userRepo) ListUsers() ([]*models.User, error) {
+	cur, err := r.collection.Find(context.TODO(), bson.M{})
+	if err != nil {
+		return nil, err
+	}
+
+	var users []*models.User
+	if err := cur.All(context.TODO(), &users); err != nil {
+		return nil, err
+	}
+	return users, nil
 }

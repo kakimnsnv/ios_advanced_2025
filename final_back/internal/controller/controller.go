@@ -31,46 +31,46 @@ func (c *controller) Bind() {
 	users := c.router.Group("/users")
 	{
 		// common
-		// users.GET("/", c.ListUsers)
+		users.GET("/", c.ListUsers)
 
 		// for user itself
 		users.POST("/register", c.RegisterUser)
 		users.POST("/login", c.LoginUser)
-		// users.POST("/refresh", c.RefreshToken)
-		// users.GET("/me", c.UserGetMe)
-		// users.PUT("/", c.UpdateMe)
-		// users.DELETE("/", c.DeleteMe)
+		users.POST("/refresh", c.RefreshToken)
+		users.GET("/me", c.GetMe)
+		users.PUT("/me", c.UpdateMe)
+		users.DELETE("/me", c.DeleteMe)
+		users.GET("/:id", c.GetUser)
 
 		// for moderators and admin
-		// users.GET("/:id", c.GetUser)
-		// users.PUT("/:id", c.UpdateUser)
-		// users.DELETE("/:id", c.DeleteUser)
+		users.PUT("/:id", c.UpdateUser)
+		users.DELETE("/:id", c.DeleteUser)
 	}
 
-	// movies := c.router.Group("/movies")
-	// {
-	// 	// common
-	// 	movies.GET("/", c.ListMovies)
-	// 	movies.GET("/:id", c.GetMovie)
+	movies := c.router.Group("/movies")
+	{
+		// 	// common
+		movies.GET("/", c.ListMovies)
+		movies.GET("/:id", c.GetMovie)
 
-	// 	// for moderators and admin
-	// 	movies.POST("/", c.CreateMovie)
-	// 	movies.PUT("/:id", c.UpdateMovie)
-	// 	movies.DELETE("/:id", c.DeleteMovie)
-	// }
+		// 	// for moderators and admin
+		movies.POST("/", c.CreateMovie)
+		movies.PUT("/:id", c.UpdateMovie)
+		movies.DELETE("/:id", c.DeleteMovie)
+	}
 
-	// reviews := c.router.Group("/reviews")
-	// {
-	// 	// common
-	// 	reviews.GET("/:movieId", c.ListReviewsByMovieID)
-	// 	reviews.GET("/:id", c.GetReview)
+	reviews := c.router.Group("/reviews")
+	{
+		// common
+		reviews.GET("/:movieId", c.ListReviewsByMovieID)
+		reviews.GET("/categories", c.ListReviewCategories)
+		reviews.PUT("/:id", c.UpdateReview)
 
-	// 	// users own
-	// 	reviews.GET("/", c.ListMyReviews)
-	// 	reviews.PUT("/:id", c.UpdateMyReview)
-	// 	reviews.POST("/", c.CreateReview)
+		// users own
+		reviews.GET("/my", c.ListMyReviews)
+		reviews.POST("/", c.CreateReview)
 
-	// 	// for moderators and admin
-	// 	reviews.DELETE("/:id", c.DeleteReview)
-	// }
+		// 	// for moderators and admin
+		reviews.DELETE("/:id", c.DeleteReview)
+	}
 }

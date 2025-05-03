@@ -22,3 +22,15 @@ type CreateReviewRequest struct {
 	Content          *string            `json:"content,omitempty" binding:"omitempty,max=500"`
 	IsPrivate        bool               `json:"isPrivate"`
 }
+
+type UpdateReviewRequest struct {
+	ReviewCategoryID primitive.ObjectID `json:"reviewCategoryId" bson:"reviewCategoryId"`
+	Rating           int                `json:"rating" binding:"omitempty,min=1,max=10"`
+	Content          *string            `json:"content,omitempty" binding:"omitempty,max=500"`
+	IsPrivate        bool               `json:"isPrivate"`
+}
+
+type ReviewCategory struct {
+	ID   primitive.ObjectID `json:"id,omitempty" bson:"_id,omitempty"`
+	Name string             `json:"name" bson:"name"`
+}

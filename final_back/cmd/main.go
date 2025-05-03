@@ -35,10 +35,10 @@ func main() {
 	userSvc := service.NewUserService(log, userRepo, jwtSvc)
 
 	movieRepo := repository.NewMovieRepo(log, collectionNames, mongoDB)
-	movieSvc := service.NewMovieService(log, movieRepo)
+	movieSvc := service.NewMovieService(log, movieRepo, userRepo)
 
 	reviewRepo := repository.NewReviewRepo(log, collectionNames, mongoDB)
-	reviewSvc := service.NewReviewService(log, reviewRepo)
+	reviewSvc := service.NewReviewService(log, reviewRepo, userRepo)
 
 	ctrl := controller.New(router, log, userSvc, movieSvc, reviewSvc, jwtSvc)
 	ctrl.Bind()

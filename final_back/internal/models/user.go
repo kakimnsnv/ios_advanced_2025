@@ -22,6 +22,22 @@ type UserCredentials struct {
 }
 
 type Tokens struct {
-	AccessToken  string `json:"access_token"`
-	RefreshToken string `json:"refresh_token"`
+	AccessToken  string `json:"accessToken"`
+	RefreshToken string `json:"refreshToken"`
+}
+
+type RefreshTokenRequest struct {
+	RefreshToken string `json:"refreshToken" binding:"required"`
+}
+
+type UpdateMeRequest struct {
+	Username *string `json:"username,omitempty" binding:"omitempty,required"`
+	Email    *string `json:"email,omitempty" binding:"omitempty,required,email"`
+}
+
+type UpdateUserRequest struct {
+	ID       *primitive.ObjectID `json:"id,omitempty" bson:"_id,omitempty"`
+	Username *string             `json:"username,omitempty" bson:"username,omitempty"`
+	Email    string              `json:"email,omitempty" bson:"email,omitempty"`
+	Roles    []Role              `json:"roles" bson:"roles"`
 }
