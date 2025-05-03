@@ -95,6 +95,7 @@ class ImageGalleryViewModel: ObservableObject {
                                 // Update the image on a background thread
                                 newImages[index].image = downloadedImage
                             }
+                            dispatchGroup.leave()
                         case .failure(let error):
                             // Record the error
                             loadErrors.append(error)
@@ -104,7 +105,6 @@ class ImageGalleryViewModel: ObservableObject {
                                 newImages.remove(at: index)
                             }
                         }
-                        dispatchGroup.leave()
                     }
                 }
             }
