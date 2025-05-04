@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  userdb:
+    image: mongo:7.0
+    container_name: userdb
+    restart: unless-stopped
+    ports:
+      - '27001:27017'
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: username
+      MONGO_INITDB_ROOT_PASSWORD: password
+    volumes:
+      - userdb_data:/data/db
+
+volumes:
+  userdb_data:
